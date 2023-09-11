@@ -393,34 +393,35 @@ set_fqdn () {
 }
 
 set_dbpass () {
-   ans=default
-   until [[ $ans == "yes" ]] || [[ $ans == "no" ]]; do
-      echo -n "  Q. Do you want to automatically create the SnipeIT database user password? (y/n) "
-      read -r setpw
+  mysqluserpw="admin"
+  #  ans=default
+  #  until [[ $ans == "yes" ]] || [[ $ans == "no" ]]; do
+  #     echo -n "  Q. Do you want to automatically create the SnipeIT database user password? (y/n) "
+  #     read -r setpw
 
-      case $setpw in
-         [yY] | [yY][Ee][Ss] )
-         mysqluserpw="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16; echo)"
-         echo ""
-         ans="yes"
-      ;;
-      [nN] | [n|N][O|o] )
-         echo -n  "  Q. What do you want your snipeit user password to be?"
-         read -rs mysqluserpw
-         echo ""
-         ans="no"
-      ;;
-      *)  echo "  Invalid answer. Please type y or n"
-      ;;
-      esac
-   done
+  #     case $setpw in
+  #        [yY] | [yY][Ee][Ss] )
+  #        mysqluserpw="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16; echo)"
+  #        echo ""
+  #        ans="yes"
+  #     ;;
+  #     [nN] | [n|N][O|o] )
+  #        echo -n  "  Q. What do you want your snipeit user password to be?"
+  #        read -rs mysqluserpw
+  #        echo ""
+  #        ans="no"
+  #     ;;
+  #     *)  echo "  Invalid answer. Please type y or n"
+  #     ;;
+  #     esac
+  #  done
 }
 
 case $distro in
   Debian)
     if [[ "$version" =~ ^11 ]]; then
     # Install for Debian 11.x
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(cat /etc/timezone)
 
@@ -503,7 +504,7 @@ case $distro in
   Ubuntu)
 if [ "${version//./}" -ge "2204" ]; then
     # Install for Ubuntu 22.04
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(cat /etc/timezone)
 
@@ -543,7 +544,7 @@ if [ "${version//./}" -ge "2204" ]; then
     exit 1
   elif [ "${version//./}" == "2004" ]; then
     # Install for Ubuntu 20.04
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(cat /etc/timezone)
 
@@ -579,7 +580,7 @@ if [ "${version//./}" -ge "2204" ]; then
     chmod 775 -R $APP_PATH/storage/
   elif [ "${version//./}" == "1804" ]; then
     # Install for Ubuntu 18.04+
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(cat /etc/timezone)
 
@@ -623,7 +624,7 @@ if [ "${version//./}" -ge "2204" ]; then
   Raspbian)
   if [[ "$version" =~ ^10 ]]; then
     # Install for Raspbian 9.x
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(cat /etc/timezone)
     cat >/etc/apt/sources.list.d/10-buster.list <<EOL
@@ -678,7 +679,7 @@ EOL
     exit 1
   elif [[ "$version" =~ ^7 ]]; then
     # Install for CentOS/Redhat 7
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(timedatectl | gawk -F'[: ]' ' $9 ~ /zone/ {print $11}');
 
@@ -719,7 +720,7 @@ EOL
 
   elif [[ "$version" =~ ^8 ]]; then
     # Install for CentOS/Redhat 8
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(timedatectl | grep "Time zone" | awk 'BEGIN { FS"("}; {print $3}');
 
@@ -762,7 +763,7 @@ EOL
 
   elif [[ "$version" =~ ^9 ]]; then
     # Install for CentOS/Redhat 9
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(timedatectl | grep "Time zone" | awk 'BEGIN { FS"("}; {print $3}');
 
@@ -811,7 +812,7 @@ EOL
   Fedora)
   if [[ "$version" =~ ^36 ]]; then
     # Install for Fedora 36+
-    set_fqdn
+    hostname --fqdn test-snipeit
     set_dbpass
     tzone=$(timedatectl | grep "Time zone" | awk 'BEGIN { FS"("}; {print $3}');
 
@@ -857,7 +858,7 @@ EOL
   exit 1
 esac
 
-setupmail=default
+setupmail="no"
 until [[ $setupmail == "yes" ]] || [[ $setupmail == "no" ]]; do
 echo "  Q. Do you want to configure mail server settings now? This can be done later too. "
 echo -n "     * You will need mail server address, port, user and password among other items. (y/n) "

@@ -1,0 +1,29 @@
+- name: Deploy Snipe-it repository
+  hosts: snipe-it
+  become: yes
+  become_user: root
+  become_method: sudo
+  gather_facts: false
+  vars:
+    ENVIROMENT: "{{ ENVIRONMENT }}"
+    BRANCH: "{{ BRANCH }}"
+  tasks:
+    - name: Checkout/Pull Snipe-it repository
+      git:
+        repo: https://github.com/HectorFernandezF/snipe-it.git
+        dest: "/home/{{ ENVIROMENT }}/snipe-it"
+        single_branch: true
+        version: "{{ BRANCH }}"
+        accept_hostkey: true
+        key_file: "/root/.ssh/id_ed25519"
+    - name: Set owner and group to snipe-it
+      file:
+        path: "/home/{{ ENVIROMENT }}/snipe-it"
+        owner: "dots"
+        group: "project"
+        recurse: yes
+    - name: Run installer
+      script: "/home/{{ ENVIROMENT }}/snipe-it/install.sh"
+      args:
+        chdir: "/home/{{ ENVIROMENT }}/snipe-it"
+        executable: /bin/bash
