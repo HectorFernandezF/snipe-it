@@ -1,0 +1,30 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - '*-*'
+  pull_request:
+    types:
+      - closed
+jobs:
+  trigger_jenkins_job
+    runs-on: self-hosted
+    steps:
+      - name: Set branch name as an environment variable
+        id: branch-name
+        run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Set ENVIRONMENT variable
+        run: |
+          if [[ $BRANCH_NAME == 'master' ]]; then
+            ENVIRONMENT=testing
+          elif [[ $BRANCH_NAME == 'develop' ]]; then
+            ENVIRONMENT=live
+          else
+            ENVIRONMENT="TBD"
+          fi
+      - name: Trigger Jenkins Job
+        run: |
+          JENKINS_URL_JOB_TRIGGER
