@@ -21,7 +21,5 @@
         group: "justia"
         recurse: yes
     - name: Run installer
-      script: "/home/{{ ENVIROMENT }}/snipe-it/install.sh"
-      args:
-        chdir: "/home/{{ ENVIROMENT }}/snipe-it"
-        executable: /bin/bash
+      command: "sh /home/{{ ENVIROMENT }}/snipe-it/install.sh"
+      remote_src: yes
