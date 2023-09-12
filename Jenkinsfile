@@ -8,7 +8,7 @@ pipeline{
                 ansiblePlaybook become: true, 
                                 colorized: true, 
                                 disableHostKeyChecking: true, 
-                                extras: 'ENVIROMENT=live, BRANCH=master', 
+                                extras: '-e ENVIROMENT=live BRANCH=master', 
                                 forks: 2, 
                                 inventory: 'ansible/inventory.ini',
                                 playbook: 'ansible/deploy/deploy.yml', 
