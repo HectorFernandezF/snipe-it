@@ -1,5 +1,7 @@
 - name: Deploy Snipe-it repository
   hosts: all
+  user: hector.fernandez
+  become: true
   gather_facts: false
   vars:
     ENVIROMENT: "{{ ENVIRONMENT }}"
