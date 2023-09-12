@@ -9,7 +9,8 @@ pipeline{
                                 disableHostKeyChecking: true, 
                                 extras: '-e ENVIROMENT=live -e BRANCH=master', 
                                 inventory: 'ansible/deploy/inventory.ini',
-                                playbook: 'ansible/deploy/deploy.yml', 
+                                playbook: 'ansible/deploy/deploy.yml',
+                                credentialsId: 'hector.fernandez'
             }
             post{
                 success{
