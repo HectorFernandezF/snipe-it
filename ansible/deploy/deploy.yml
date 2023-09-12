@@ -22,4 +22,3 @@
         recurse: yes
     - name: Run installer
       command: "sh /home/{{ ENVIROMENT }}/snipe-it/install.sh"
-      remote_src: yes
