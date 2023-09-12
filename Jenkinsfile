@@ -6,7 +6,6 @@ pipeline{
                 echo "====++++executing Deploy to instance++++===="
 
                 ansiblePlaybook become: true, 
-                                colorized: true, 
                                 disableHostKeyChecking: true, 
                                 extras: '-e ENVIROMENT=live -e BRANCH=master', 
                                 forks: 2, 
