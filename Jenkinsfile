@@ -11,7 +11,7 @@ pipeline{
                                 extras: 'ENVIROMENT=live, BRANCH=master', 
                                 forks: 2, 
                                 inventory: 'ansible/inventory.ini',
-                                playbook: 'ansible/deploy.yml', 
+                                playbook: 'ansible/deploy/deploy.yml', 
                                 sudoUser: null, 
                                 vaultCredentialsId: 'id_ed25519'
             }
