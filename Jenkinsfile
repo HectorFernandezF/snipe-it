@@ -10,7 +10,7 @@ pipeline{
                                 disableHostKeyChecking: true, 
                                 extras: '-e ENVIROMENT=live -e BRANCH=master', 
                                 forks: 2, 
-                                inventory: 'ansible/inventory.ini',
+                                inventory: 'ansible/deploy/inventory.ini',
                                 playbook: 'ansible/deploy/deploy.yml', 
                                 sudoUser: null, 
                                 vaultCredentialsId: 'id_ed25519'

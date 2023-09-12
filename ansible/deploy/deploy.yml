@@ -1,8 +1,5 @@
 - name: Deploy Snipe-it repository
   hosts: snipe-it
-  become: yes
-  become_user: root
-  become_method: sudo
   gather_facts: false
   vars:
     ENVIROMENT: "{{ ENVIRONMENT }}"
