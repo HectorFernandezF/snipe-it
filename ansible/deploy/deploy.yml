@@ -11,7 +11,6 @@
       git:
         repo: https://github.com/HectorFernandezF/snipe-it.git
         dest: "/home/{{ ENVIROMENT }}/snipe-it"
-        single_branch: true
         version: "{{ BRANCH }}"
         accept_hostkey: true
         key_file: "/root/.ssh/id_ed25519"
